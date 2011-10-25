@@ -69,8 +69,12 @@ describe UsersController do
     
     describe "failure" do
       before(:each) do
-        @attr = { :name => "", :email => "", :password => "",
-                  :password_confirmation => ""}
+        @attr = { 
+          :name                  => "", 
+          :email                 => "", 
+          :password              => "",
+          :password_confirmation => ""
+        }
       end
       
       it "should not create a user" do
@@ -92,8 +96,12 @@ describe UsersController do
     
     describe "success" do
       before(:each) do
-        @attr = { :name => "New User", :email => "user@example.com",
-                  :password => "foobar", :password_confirmation => "foobar" }
+        @attr = { 
+          :name                  => "New User", 
+          :email                 => "user@example.com",
+          :password              => "foobar", 
+          :password_confirmation => "foobar" 
+        }
       end
       
       it "should create an user" do
@@ -110,6 +118,11 @@ describe UsersController do
       it "should have a welcome message" do
         post :create, :user => @attr
         flash[:success].should =~ /welcome to the sample app/i
+      end
+      
+      it "should sign the user in" do
+        post :create, :user => @attr
+        controller.should be_signed_in
       end
     end
   end
