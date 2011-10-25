@@ -44,6 +44,25 @@ describe UsersController do
       get :new
       response.should have_selector("title", :content => "Sign Up")
     end
+    
+    it "shold have a name field" do
+      get :new
+      response.should have_selector("input[name='user[name]'][type='text']")
+    end
+    it "shold have an email field" do
+      get :new
+      response.should have_selector("input[name='user[email]'][type='text']")
+    end
+    it "shold have a password field" do
+      get :new
+      response.should have_selector(
+        "input[name='user[password]'][type='password']")
+    end
+    it "shold have a passw confirmation field" do
+      get :new
+      response.should have_selector(
+        "input[name='user[password_confirmation]'][type='password']")
+    end
   end
 
   describe "POST 'create'" do
