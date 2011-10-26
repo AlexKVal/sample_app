@@ -59,7 +59,6 @@ describe User do
     user_with_duplicate_email.should_not be_valid
   end
   
-  
   describe "passord validations" do
     it "should require a password" do
       User.new(@attr.merge(:password => "", :password_confirmation => "")).
@@ -83,7 +82,6 @@ describe User do
       User.new(hash).should_not be_valid
     end
   end
-  
   
   describe "password encryption" do
     before(:each) do
@@ -124,4 +122,39 @@ describe User do
       end
     end
   end
+
+  describe "admin attribute" do
+    before(:each) do
+      @user = User.create!(@attr)
+    end
+    
+    it "should respond to admin" do
+      @user.should respond_to(:admin)      
+    end
+    
+    it "should not be an admin by default" do
+      @user.should_not be_admin      
+    end
+    
+    it "should be convertible to an admin" do
+      @user.toggle!(:admin)
+      @user.should be_admin
+    end
+  end
 end
+
+
+# == Schema Information
+#
+# Table name: users
+#
+#  id                 :integer         not null, primary key
+#  name               :string(255)
+#  email              :string(255)
+#  created_at         :datetime
+#  updated_at         :datetime
+#  encrypted_password :string(255)
+#  salt               :string(255)
+#  admin              :boolean         default(FALSE)
+#
+
